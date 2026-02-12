@@ -1,0 +1,194 @@
+<div class="mb-4 flex gap-4 items-center">
+  <label for="sort-select" class="sr-only" i18n>Sort trips by</label>
+  <select
+    id="sort-select"
+    [value]="sort().by"
+    (change)="onSortChange($event)"
+    class="border border-gray-300 dark:border-gray-600 rounded p-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500"
+    i18n-aria-label
+    aria-label="Sort by"
+  >
+    <option value="title" i18n>Name</option>
+    <option value="price" i18n>Price</option>
+    <option value="rating" i18n>Rating</option>
+    <option value="creationDate" i18n>Creation Date</option>
+  </select>
+
+  <button
+    (click)="onSortOrderToggle()"
+    class="border border-gray-300 dark:border-gray-600 rounded p-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+    [attr.aria-label]="getSortAriaLabel()"
+  >
+    {{ sort().order === 'ASC' ? '↑' : '↓' }}
+  </button>
+
+  <button
+    (click)="onShowFiltersToggle()"
+    class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 focus:ring-2 focus:ring-green-300 dark:focus:ring-green-700 transition-colors"
+    [attr.aria-label]="getShowFiltersAriaLabel()"
+  >
+    {{ getShowFiltersText() }}
+  </button>
+</div>
+
+<!-- Filters Section -->
+@if (showFilters()) {
+  <div class="mb-6 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg">
+    <div class="flex justify-between items-start mb-3">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white" i18n>Filters</h3>
+      <span class="text-xs text-gray-500 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded" i18n>
+        Press <kbd class="bg-white dark:bg-gray-600 px-1 rounded text-xs">Esc</kbd> to clear field
+      </span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div>
+        <label for="title-filter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" i18n
+          >Title</label
+        >
+        <input
+          id="title-filter"
+          type="text"
+          [value]="filters().title"
+          (input)="onTitleFilterChange($event)"
+          (blur)="onTitleFilterChange($event)"
+          (keydown)="onFilterKeydown($event, 'title')"
+          i18n-placeholder
+          placeholder="Search by title..."
+          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+          i18n-aria-label
+          aria-label="Filter by title"
+        />
+      </div>
+
+      <div>
+        <label for="min-price" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" i18n
+          >Min Price</label
+        >
+        <input
+          id="min-price"
+          type="number"
+          [value]="filters().minPrice"
+          (input)="onMinPriceChange($event)"
+          (blur)="onMinPriceChange($event)"
+          (keydown)="onFilterKeydown($event, 'minPrice')"
+          placeholder="0"
+          min="0"
+          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+          i18n-aria-label
+          aria-label="Minimum price filter"
+        />
+      </div>
+
+      <div>
+        <label for="max-price" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" i18n
+          >Max Price</label
+        >
+        <input
+          id="max-price"
+          type="number"
+          [value]="filters().maxPrice"
+          (input)="onMaxPriceChange($event)"
+          (blur)="onMaxPriceChange($event)"
+          (keydown)="onFilterKeydown($event, 'maxPrice')"
+          placeholder="10000"
+          min="0"
+          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+          i18n-aria-label
+          aria-label="Maximum price filter"
+        />
+      </div>
+
+      <div>
+        <label for="min-rating" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" i18n
+          >Min Rating</label
+        >
+        <input
+          id="min-rating"
+          type="number"
+          [value]="filters().minRating"
+          (input)="onMinRatingChange($event)"
+          (blur)="onMinRatingChange($event)"
+          (keydown)="onFilterKeydown($event, 'minRating')"
+          placeholder="0"
+          min="0"
+          max="5"
+          step="0.1"
+          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+          i18n-aria-label
+          aria-label="Minimum rating filter"
+        />
+      </div>
+
+      <div>
+        <label for="max-rating" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" i18n
+          >Max Rating</label
+        >
+        <input
+          id="max-rating"
+          type="number"
+          [value]="filters().maxRating"
+          (input)="onMaxRatingChange($event)"
+          (blur)="onMaxRatingChange($event)"
+          (keydown)="onFilterKeydown($event, 'maxRating')"
+          placeholder="5"
+          min="0"
+          max="5"
+          step="0.1"
+          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+          i18n-aria-label
+          aria-label="Maximum rating filter"
+        />
+      </div>
+
+      <div>
+        <label for="tags-filter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" i18n
+          >Tags</label
+        >
+        <div class="border border-gray-300 dark:border-gray-600 rounded-md p-2 focus-within:ring-2 focus-within:ring-primary-500 focus-within:border-primary-500 bg-white dark:bg-gray-800">
+          <!-- Display existing tags as pills -->
+          @if (filters().tags.length > 0) {
+            <div class="flex gap-1 mb-2">
+              @for (tag of filters().tags; track tag) {
+                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200">
+                  {{ tag }}
+                  <button
+                    (click)="onRemoveTag(tag)"
+                    class="ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-primary-200 dark:hover:bg-primary-800 focus:outline-none focus:ring-1 focus:ring-primary-300 dark:focus:ring-primary-700"
+                    [attr.aria-label]="getRemoveTagAriaLabel(tag)"
+                  >
+                    ×
+                  </button>
+                </span>
+              }
+            </div>
+          }
+          <!-- Input for new tags -->
+          <input
+            id="tags-filter"
+            type="text"
+            (keydown)="onTagKeydown($event)"
+            (input)="onTagInput($event)"
+            i18n-placeholder
+            placeholder="Type a tag and press Enter or comma..."
+            class="w-full outline-none bg-transparent text-gray-900 dark:text-white"
+            i18n-aria-label
+            aria-label="Add tags"
+          />
+        </div>
+        <p class="text-xs text-gray-500 dark:text-gray-300 mt-1" i18n>Press Enter or comma to add tags (Tags API Not Working)</p>
+      </div>
+    </div>
+
+    <div class="mt-4 flex justify-end">
+      <button
+        (click)="onClearFilters()"
+        class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700 transition-colors"
+        i18n-aria-label
+        aria-label="Clear all filters"
+        i18n
+      >
+        Clear Filters
+      </button>
+    </div>
+  </div>
+}

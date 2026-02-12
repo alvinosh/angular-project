@@ -1,0 +1,81 @@
+<div class="container mx-auto p-4 bg-gray-50 dark:bg-gray-900 min-h-screen">
+  @if (tripOfTheDay()) {
+    <div class="mb-6 p-4 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+      <h2 class="text-lg font-semibold mb-2 text-yellow-800 dark:text-yellow-200" i18n>🌟 Trip of the Day</h2>
+      <div class="flex items-center gap-4">
+        <img
+          [src]="tripOfTheDay()!.thumbnailUrl"
+          [alt]="getTripAlt(tripOfTheDay()!)"
+          class="w-20 h-20 object-cover rounded"
+        />
+        <div>
+          <h3 class="font-semibold text-gray-900 dark:text-white">{{ tripOfTheDay()!.title }}</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-300">{{ tripOfTheDay()!.verticalType }}</p>
+          <p class="text-sm text-gray-900 dark:text-white" i18n>Price: {{ tripOfTheDay()!.price }}</p>
+        </div>
+        <button
+          (click)="navigateToDetail(tripOfTheDay()!.id)"
+          class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-300 dark:focus:ring-yellow-700 transition-colors"
+          i18n
+        >
+          View Details
+        </button>
+      </div>
+    </div>
+  }
+
+  <app-filters
+    [sort]="currentSort()"
+    [filters]="currentFilters()"
+    [showFilters]="showFilters()"
+    (filtersChange)="onFiltersChange($event)"
+    (showFiltersToggle)="onShowFiltersToggle()"
+  ></app-filters>
+
+  @if (loading()) {
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" role="list">
+      @for (item of [1, 2, 3, 4, 5, 6]; track item) {
+        <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 animate-pulse bg-white dark:bg-gray-800">
+          <!-- Skeleton image -->
+          <div class="w-full h-48 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
+
+          <!-- Skeleton title -->
+          <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
+
+          <!-- Skeleton badges section -->
+          <div class="flex justify-between items-center mb-2">
+            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-20"></div>
+            <div class="h-5 bg-gray-200 dark:bg-gray-700 rounded w-12"></div>
+          </div>
+
+          <!-- Skeleton details -->
+          <div class="space-y-1">
+            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-24"></div>
+            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-32"></div>
+            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-20"></div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else if (error()) {
+    <p class="text-red-500 dark:text-red-300" role="alert">{{ error() }}</p>
+  } @else {
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" role="list">
+      @for (trip of displayedTrips(); track trip.id) {
+        <app-trip-card [trip]="trip" (cardClick)="navigateToDetail(trip.id)"> </app-trip-card>
+      }
+    </div>
+
+    @if (totalPages() > 1) {
+      <app-pagination
+        [currentPage]="currentPage()"
+        [totalPages]="totalPages()"
+        [goToPageInput]="goToPageInput()"
+        (previousPage)="onPreviousPage()"
+        (nextPage)="onNextPage()"
+        (goToPageInputChange)="onGoToPageInputChange($event)"
+        (goToPage)="onGoToPage()"
+      ></app-pagination>
+    }
+  }
+</div>

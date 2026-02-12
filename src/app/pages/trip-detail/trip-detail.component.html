@@ -1,0 +1,45 @@
+<div class="container mx-auto p-4 bg-gray-50 dark:bg-gray-900 min-h-screen">
+  @if (loading()) {
+    <p class="text-gray-900 dark:text-white" i18n>Loading...</p>
+  } @else if (error()) {
+    <p class="text-red-500 dark:text-red-400">{{ error() }}</p>
+  } @else if (trip()) {
+    <div class="max-w-4xl mx-auto">
+      <button
+        (click)="goBack()"
+        class="mb-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700 transition-colors"
+        i18n-aria-label
+        aria-label="Go back to home"
+        i18n
+      >
+        ← Back
+      </button>
+
+      <img
+        [src]="trip()!.imageUrl"
+        [alt]="getAlt()"
+        class="w-full h-96 object-cover rounded mb-4"
+      />
+
+      <h1 class="text-3xl font-bold mb-4 text-gray-900 dark:text-white">{{ trip()!.title }}</h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+          <p class="text-gray-900 dark:text-white" i18n><strong>Price:</strong> {{ trip()!.price }}</p>
+          <p class="text-gray-900 dark:text-white" i18n><strong>Rating:</strong> {{ trip()!.rating }} ({{ trip()!.nrOfRatings }} reviews)</p>
+          <p class="text-gray-900 dark:text-white" i18n><strong>Vertical Type:</strong> {{ trip()!.verticalType }}</p>
+          <p class="text-gray-900 dark:text-white" i18n><strong>CO2:</strong> {{ trip()!.co2 }} kg</p>
+          <p class="text-gray-900 dark:text-white" i18n><strong>Creation Date:</strong> {{ trip()!.creationDate }}</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+          <p class="text-gray-900 dark:text-white" i18n><strong>Tags:</strong> {{ trip()!.tags.join(', ') }}</p>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
+        <h2 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white" i18n>Description</h2>
+        <p class="text-gray-700 dark:text-gray-300">{{ trip()!.description }}</p>
+      </div>
+    </div>
+  }
+</div>

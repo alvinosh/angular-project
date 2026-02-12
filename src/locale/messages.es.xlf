@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="489499113264505277" datatype="html">
+        <source>Sort trips by</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">2,3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7699622144571229146" datatype="html">
+        <source>Sort by</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">9,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8953033926734869941" datatype="html">
+        <source>Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8894377483833272091" datatype="html">
+        <source>Price</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3706222784708785028" datatype="html">
+        <source>Rating</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6004681856910260407" datatype="html">
+        <source>Creation Date</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">14,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4163272119298020373" datatype="html">
+        <source>Filters</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">38,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1472949437004497128" datatype="html">
+        <source> Press <x id="START_TAG_KBD" ctype="x-kbd" equiv-text="&lt;kbd class=&quot;bg-white dark:bg-gray-600 px-1 rounded text-xs&quot;&gt;"/>Esc<x id="CLOSE_TAG_KBD" ctype="x-kbd" equiv-text="&lt;/kbd&gt;"/> to clear field </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">40,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5701618810648052610" datatype="html">
+        <source>Title</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">46,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7227133219036104114" datatype="html">
+        <source>Search by title...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">56,57</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1890297221031788927" datatype="html">
+        <source>Filter by title</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">59,60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5180929788417132963" datatype="html">
+        <source>Min Price</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">65,66</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6222646315823304472" datatype="html">
+        <source>Minimum price filter</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">78,79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9034794484778404742" datatype="html">
+        <source>Max Price</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">84,85</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3918251150825135499" datatype="html">
+        <source>Maximum price filter</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">97,98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1540306710589197864" datatype="html">
+        <source>Min Rating</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">103,104</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3908483076922701784" datatype="html">
+        <source>Minimum rating filter</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">118,119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3347555921805248342" datatype="html">
+        <source>Max Rating</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">124,125</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1861111995824674085" datatype="html">
+        <source>Maximum rating filter</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">139,140</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7886570921510760899" datatype="html">
+        <source>Tags</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">145,146</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="640802743036308989" datatype="html">
+        <source>Type a tag and press Enter or comma...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">172,173</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8858497430333317910" datatype="html">
+        <source>Add tags</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">175,176</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6020137054132513277" datatype="html">
+        <source>Press Enter or comma to add tags (Tags API Not Working)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">178,179</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4176168554520872982" datatype="html">
+        <source>Clear all filters</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">187,188</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1953429831171058348" datatype="html">
+        <source> Clear Filters </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.html</context>
+          <context context-type="linenumber">190,191</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8901045409781913633" datatype="html">
+        <source>Sort ascending</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.ts</context>
+          <context context-type="linenumber">195</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1058365381390737447" datatype="html">
+        <source>Sort descending</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.ts</context>
+          <context context-type="linenumber">195</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5797835178123017550" datatype="html">
+        <source>Hide filters</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.ts</context>
+          <context context-type="linenumber">199</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2173294968483900268" datatype="html">
+        <source>Show filters</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.ts</context>
+          <context context-type="linenumber">199</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8898253667808677314" datatype="html">
+        <source>Hide Filters</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.ts</context>
+          <context context-type="linenumber">203</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="288867841843589577" datatype="html">
+        <source>Show Filters</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.ts</context>
+          <context context-type="linenumber">203</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2632694364939941943" datatype="html">
+        <source>Remove <x id="PH" equiv-text="tag"/> tag</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/filters/filters.component.ts</context>
+          <context context-type="linenumber">207</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6246715534656873035" datatype="html">
+        <source> App Trips </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/header/header.html</context>
+          <context context-type="linenumber">5,6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4608015944298801142" datatype="html">
+        <source>Switch to light mode</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/header/header.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="803131845720356706" datatype="html">
+        <source>Switch to dark mode</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/header/header.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1147413164438278837" datatype="html">
+        <source>Pagination</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pagination/pagination.component.html</context>
+          <context context-type="linenumber">6,8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3629960544875360046" datatype="html">
+        <source>Previous page</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pagination/pagination.component.html</context>
+          <context context-type="linenumber">13,14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1963572893950133556" datatype="html">
+        <source> ← Previous </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pagination/pagination.component.html</context>
+          <context context-type="linenumber">16,17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7708270344948043036" datatype="html">
+        <source> <x id="INTERPOLATION" equiv-text="{{ pageText() }}"/> </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pagination/pagination.component.html</context>
+          <context context-type="linenumber">23,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1286034572431173427" datatype="html">
+        <source>Go to page</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pagination/pagination.component.html</context>
+          <context context-type="linenumber">29,30</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pagination/pagination.component.html</context>
+          <context context-type="linenumber">49,50</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1561474583159785331" datatype="html">
+        <source>Go to...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pagination/pagination.component.html</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="965480674679409626" datatype="html">
+        <source>Enter page number</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pagination/pagination.component.html</context>
+          <context context-type="linenumber">42,43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4165055535933161167" datatype="html">
+        <source> Go </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pagination/pagination.component.html</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3337301694210287595" datatype="html">
+        <source>Next page</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pagination/pagination.component.html</context>
+          <context context-type="linenumber">61,62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7460903712067655939" datatype="html">
+        <source> Next → </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pagination/pagination.component.html</context>
+          <context context-type="linenumber">64,65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6221116945238325541" datatype="html">
+        <source>Page <x id="PH" equiv-text="this.currentPage()"/> of <x id="PH_1" equiv-text="this.totalPages()"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/pagination/pagination.component.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5696244706071223399" datatype="html">
+        <source>Price: <x id="INTERPOLATION" equiv-text="{{ trip().price }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/trip-card/trip-card.component.html</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
+          <context context-type="linenumber">14,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1547409857780177351" datatype="html">
+        <source>Rating: <x id="INTERPOLATION" equiv-text="{{ trip().rating }}"/> (<x id="INTERPOLATION_1" equiv-text="{{ trip().nrOfRatings }}"/> reviews)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/trip-card/trip-card.component.html</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8371415082050124406" datatype="html">
+        <source>CO2: <x id="INTERPOLATION" equiv-text="{{ trip().co2 }}"/> kg</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/trip-card/trip-card.component.html</context>
+          <context context-type="linenumber">33,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3473324025053379050" datatype="html">
+        <source>View details for <x id="PH" equiv-text="this.trip().title"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/trip-card/trip-card.component.ts</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6223458566712133696" datatype="html">
+        <source>Image of <x id="PH" equiv-text="this.trip().title"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/trip-card/trip-card.component.ts</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.ts</context>
+          <context context-type="linenumber">325</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trip-detail/trip-detail.component.ts</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="790662500688899400" datatype="html">
+        <source>Score: <x id="PH" equiv-text="this.scoreBadgeText()"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/trip-card/trip-card.component.ts</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7753608555982307716" datatype="html">
+        <source>🌟 Trip of the Day</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
+          <context context-type="linenumber">4,5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5286620359229393771" datatype="html">
+        <source> View Details </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/home/home.component.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3894950702316166331" datatype="html">
+        <source>Loading...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trip-detail/trip-detail.component.html</context>
+          <context context-type="linenumber">3,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4918449394175113247" datatype="html">
+        <source>Go back to home</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trip-detail/trip-detail.component.html</context>
+          <context context-type="linenumber">12,13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8170777048535640572" datatype="html">
+        <source> ← Back </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trip-detail/trip-detail.component.html</context>
+          <context context-type="linenumber">15,16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4323867187347564043" datatype="html">
+        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Price:<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> <x id="INTERPOLATION" equiv-text="{{ trip()!.price }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trip-detail/trip-detail.component.html</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2686927287822065857" datatype="html">
+        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Rating:<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> <x id="INTERPOLATION" equiv-text="{{ trip()!.rating }}"/> (<x id="INTERPOLATION_1" equiv-text="{{ trip()!.nrOfRatings }}"/> reviews)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trip-detail/trip-detail.component.html</context>
+          <context context-type="linenumber">29,30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1003637199055096266" datatype="html">
+        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Vertical Type:<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> <x id="INTERPOLATION" equiv-text="{{ trip()!.verticalType }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trip-detail/trip-detail.component.html</context>
+          <context context-type="linenumber">30,31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2150055373744819756" datatype="html">
+        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>CO2:<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> <x id="INTERPOLATION" equiv-text="{{ trip()!.co2 }}"/> kg</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trip-detail/trip-detail.component.html</context>
+          <context context-type="linenumber">31,32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8611229329371106510" datatype="html">
+        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Creation Date:<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> <x id="INTERPOLATION" equiv-text="{{ trip()!.creationDate }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trip-detail/trip-detail.component.html</context>
+          <context context-type="linenumber">32,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8497602490087575984" datatype="html">
+        <source><x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/>Tags:<x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> <x id="INTERPOLATION" equiv-text="{{ trip()!.tags.join(&apos;, &apos;) }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trip-detail/trip-detail.component.html</context>
+          <context context-type="linenumber">35,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4902817035128594900" datatype="html">
+        <source>Description</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/pages/trip-detail/trip-detail.component.html</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

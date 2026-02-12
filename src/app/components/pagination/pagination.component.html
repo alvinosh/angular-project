@@ -1,0 +1,67 @@
+@if (totalPages() > 1) {
+  <div
+    class="mt-6 flex justify-center items-center gap-3"
+    role="navigation"
+    i18n-aria-label
+    aria-label="Pagination"
+  >
+    <button
+      (click)="onPreviousPage()"
+      [disabled]="currentPage() === 1"
+      class="px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 disabled:bg-gray-50 dark:disabled:bg-gray-900 disabled:cursor-not-allowed text-gray-700 dark:text-gray-300 disabled:text-gray-400 dark:disabled:text-gray-600 rounded-lg font-medium transition-colors duration-200 focus:ring-2 focus:ring-primary-500 focus:outline-none"
+      i18n-aria-label
+      aria-label="Previous page"
+      i18n
+    >
+      ← Previous
+    </button>
+
+    <div
+      class="flex items-center gap-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 shadow-sm"
+    >
+      <span class="text-sm text-gray-600 dark:text-gray-300 font-medium" i18n>
+        {{ pageText() }}
+      </span>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <div class="relative">
+        <label for="go-to-page" class="sr-only" i18n>Go to page</label>
+        <input
+          id="go-to-page"
+          type="number"
+          [value]="goToPageInput()"
+          (input)="onGoToPageInputChange($event)"
+          (keydown.enter)="onGoToPage()"
+          min="1"
+          [max]="totalPages()"
+          class="w-20 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-center text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+          i18n-placeholder
+          placeholder="Go to..."
+          i18n-aria-label
+          aria-label="Enter page number"
+        />
+      </div>
+      <button
+        (click)="onGoToPage()"
+        class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:bg-primary-500 disabled:cursor-not-allowed font-medium transition-colors duration-200 focus:ring-2 focus:ring-primary-500 focus:outline-none"
+        i18n-aria-label
+        aria-label="Go to page"
+        i18n
+      >
+        Go
+      </button>
+    </div>
+
+    <button
+      (click)="onNextPage()"
+      [disabled]="currentPage() === totalPages()"
+      class="px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 disabled:bg-gray-50 dark:disabled:bg-gray-900 disabled:cursor-not-allowed text-gray-700 dark:text-gray-300 disabled:text-gray-400 dark:disabled:text-gray-600 rounded-lg font-medium transition-colors duration-200 focus:ring-2 focus:ring-primary-500 focus:outline-none"
+      i18n-aria-label
+      aria-label="Next page"
+      i18n
+    >
+      Next →
+    </button>
+  </div>
+}
