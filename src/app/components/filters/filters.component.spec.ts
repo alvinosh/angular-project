@@ -64,6 +64,10 @@ describe('FiltersComponent', () => {
   });
 
   it('should emit filtersChange on title input', () => {
+    // First show filters
+    fixture.componentRef.setInput('showFilters', true);
+    fixture.detectChanges();
+
     const spy = vi.fn();
     component.filtersChange.subscribe(spy);
 
@@ -78,6 +82,10 @@ describe('FiltersComponent', () => {
   });
 
   it('should emit filtersChange on min price input', () => {
+    // First show filters
+    fixture.componentRef.setInput('showFilters', true);
+    fixture.detectChanges();
+
     const spy = vi.fn();
     component.filtersChange.subscribe(spy);
 
@@ -92,6 +100,10 @@ describe('FiltersComponent', () => {
   });
 
   it('should emit filtersChange on max price input', () => {
+    // First show filters
+    fixture.componentRef.setInput('showFilters', true);
+    fixture.detectChanges();
+
     const spy = vi.fn();
     component.filtersChange.subscribe(spy);
 
@@ -122,16 +134,18 @@ describe('FiltersComponent', () => {
   });
 
   it('should display tags when filters has values', () => {
+    fixture.componentRef.setInput('showFilters', true);
     fixture.componentRef.setInput('filters', { title: '', tags: ['tag1', 'tag2'] });
     fixture.detectChanges();
 
-    const tags = fixture.nativeElement.querySelectorAll('.rounded-full');
+    const tags = fixture.nativeElement.querySelectorAll('span.rounded-full');
     expect(tags.length).toBe(2);
     expect(tags[0].textContent).toContain('tag1');
     expect(tags[1].textContent).toContain('tag2');
   });
 
   it('should emit filtersChange when tag remove button is clicked', () => {
+    fixture.componentRef.setInput('showFilters', true);
     fixture.componentRef.setInput('filters', { title: '', tags: ['tag1'] });
     fixture.detectChanges();
 

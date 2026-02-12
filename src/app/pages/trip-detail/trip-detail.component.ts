@@ -46,7 +46,7 @@ export class TripDetailComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/']);
+    window.history.back();
   }
 
   getAlt() {

@@ -3,7 +3,11 @@
   "version": 1,
   "cli": {
     "packageManager": "npm",
-    "schematicCollections": ["angular-eslint"]
+    "schematicCollections": [
+      "@cypress/schematic",
+      "angular-eslint",
+      "@schematics/angular"
+    ]
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -72,14 +76,15 @@
                 }
               ]
             },
-            "es": {
-              "localize": ["es"]
-            },
             "sq": {
-              "localize": ["sq"]
+              "localize": [
+                "sq"
+              ]
             },
             "it": {
-              "localize": ["it"]
+              "localize": [
+                "it"
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -98,9 +103,6 @@
             },
             "it": {
               "buildTarget": "angular-project:build:it"
-            },
-            "es": {
-              "buildTarget": "angular-project:build:es"
             }
           },
           "defaultConfiguration": "development"
@@ -111,7 +113,55 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "angular-project:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "angular-project:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false
+          }
+        },
+        "ct": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "angular-project:serve",
+            "watch": true,
+            "headless": false,
+            "testingType": "component"
+          },
+          "configurations": {
+            "development": {
+              "devServerTarget": "angular-project:serve:development"
+            }
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "angular-project:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "angular-project:serve:production"
+            }
           }
         }
       }

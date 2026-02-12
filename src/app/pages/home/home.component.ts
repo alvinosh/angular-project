@@ -155,6 +155,11 @@ export class HomeComponent implements OnInit {
       if (params['tags']) {
         this.tagsArray.set(params['tags'].split(',').map((tag: string) => tag.trim()).filter((tag: string) => tag.length > 0));
       }
+
+      // Show filters if there are active filters
+      if (this.hasActiveFilters()) {
+        this.showFilters.set(true);
+      }
     });
 
     // Initial load
