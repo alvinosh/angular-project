@@ -17,14 +17,14 @@ describe('Trip App E2E Tests', () => {
         .within(() => {
           cy.get('img').should('be.visible');
           cy.get('h3').should('not.be.empty');
-          cy.contains('Price:').should('be.visible');
-          cy.contains('Rating:').should('be.visible');
-          cy.contains('CO2:').should('be.visible');
+          cy.contains('Price').should('be.visible');
+          cy.contains('Rating').should('be.visible');
+          cy.contains('CO₂').should('be.visible');
         });
     });
 
     it('should display trip of the day section', () => {
-      cy.get('h2').contains('🌟 Trip of the Day').should('be.visible');
+      cy.get('h2').contains('Trip of the Day').should('be.visible');
       cy.get('button').contains('View Details').should('be.visible');
     });
   });
@@ -49,10 +49,10 @@ describe('Trip App E2E Tests', () => {
 
     it('should toggle sort order', () => {
       // Click the sort order button
-      cy.get('button[aria-label*="Sort"]').click();
+      cy.get('button[aria-label="Sort ascending"]').click();
 
       // The button text should change from ↑ to ↓ or vice versa
-      cy.get('button[aria-label*="Sort"]').should('contain', '↓');
+      cy.get('button[aria-label="Sort descending"]').should('contain', '↓');
     });
   });
 
@@ -62,7 +62,7 @@ describe('Trip App E2E Tests', () => {
       cy.get('input#title-filter').should('not.exist');
 
       // Click the filters toggle button
-      cy.get('button[aria-label*="filters"]').click();
+      cy.get('button[aria-label="Show filters"]').click();
 
       // Filters should now be visible
       cy.get('input#title-filter').should('be.visible');
@@ -72,7 +72,7 @@ describe('Trip App E2E Tests', () => {
 
     it('should filter by title', () => {
       // Show filters
-      cy.get('button[aria-label*="filters"]').click();
+      cy.get('button[aria-label="Show filters"]').click();
 
       // Type in title filter
       cy.get('#title-filter').type('test trip');
@@ -86,7 +86,7 @@ describe('Trip App E2E Tests', () => {
 
     it('should filter by price range', () => {
       // Show filters
-      cy.get('button[aria-label*="filters"]').click();
+      cy.get('button[aria-label="Show filters"]').click();
 
       // Set min and max price
       cy.get('#min-price').type('100');
@@ -101,7 +101,7 @@ describe('Trip App E2E Tests', () => {
 
     it('should clear filters', () => {
       // Show filters and add some
-      cy.get('button[aria-label*="filters"]').click();
+      cy.get('button[aria-label="Show filters"]').click();
       cy.get('#title-filter').type('test');
 
       // Click clear filters
@@ -126,14 +126,14 @@ describe('Trip App E2E Tests', () => {
 
     it('should preserve filters when navigating back from details', () => {
       // Apply some filters
-      cy.get('button[aria-label*="filters"]').click();
+      cy.get('button[aria-label="Show filters"]').click();
       cy.get('#title-filter').type('test filter');
 
       // Navigate to details
       cy.get('app-trip-card').first().click();
 
       // Navigate back using the back button
-      cy.get('button').contains('← Back').click();
+      cy.get('button').contains('← Back to Explore').click();
 
       // Check that filters are still applied
       cy.get('#title-filter').should('have.value', 'test filter');
@@ -145,14 +145,14 @@ describe('Trip App E2E Tests', () => {
       // Initially should be light theme (no dark class on html)
       cy.get('html').should('not.have.class', 'dark');
 
-      // Click theme toggle (assuming it's in header)
-      cy.get('header button').click();
+      // Click theme toggle (in header)
+      cy.get('header button').first().click();
 
       // Should now have dark class
       cy.get('html').should('have.class', 'dark');
 
       // Click again to toggle back
-      cy.get('header button').click();
+      cy.get('header button').first().click();
 
       // Should be light again
       cy.get('html').should('not.have.class', 'dark');
@@ -165,8 +165,8 @@ describe('Trip App E2E Tests', () => {
       cy.get('app-pagination').then(($pagination) => {
         if ($pagination.length > 0) {
           // If pagination exists, test it
-          cy.get('button').contains('Next').should('be.visible');
-          cy.get('button').contains('Previous').should('be.visible');
+          cy.get('button[aria-label="Previous page"]').should('be.visible');
+          cy.get('button[aria-label="Next page"]').should('be.visible');
         } else {
           // If no pagination, that's also fine (maybe few trips)
           cy.log('No pagination needed - few trips');
@@ -181,8 +181,10 @@ describe('Trip App E2E Tests', () => {
       cy.get('[role="list"]', { timeout: 10000 }).should('be.visible');
 
       // Check trip cards have proper roles
-      cy.get('app-trip-card').first().find('div[role="button"]').should('exist');
-      cy.get('app-trip-card').first().find('div[tabindex="0"]').should('exist');
+      cy.get('app-trip-card')
+        .first()
+        .find('[role="button"]')
+        .should('have.attr', 'tabindex', '0');
 
       // Check images have alt text
       cy.get('app-trip-card img').first().should('have.attr', 'alt').and('not.be.empty');
