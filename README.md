@@ -63,11 +63,7 @@ _Figure 4: Application in dark theme mode._
 
 ### Caching
 
-To handle large datasets efficiently, the application implements caching at multiple levels:
-
-- HTTP response caching for API calls
-- In-memory caching for frequently accessed data
-- Service-level caching to minimize redundant requests
+To handle large datasets efficiently, the application implements caching:
 
 ### Internationalization (i18n)
 
