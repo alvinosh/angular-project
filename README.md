@@ -54,15 +54,10 @@ _Figure 2: Detailed view of a selected trip with full information._
 ![Sorting](screenshots/sorting-functionality.png)
 _Figure 3: Sorting options applied to the trip list._
 
-### Score Badges
-
-![Score Badges](screenshots/score-badges.png)
-_Figure 4: Trip cards showing score badges based on calculated ratings._
-
 ### Dark Theme
 
 ![Dark Theme](screenshots/dark-theme.png)
-_Figure 5: Application in dark theme mode._
+_Figure 4: Application in dark theme mode._
 
 ## Technical Implementation
 
@@ -145,6 +140,59 @@ For Italian:
 ```bash
 ng serve --configuration=it
 ```
+
+### Docker Deployment
+
+The application is containerized using Docker with a multi-stage build process for optimal production deployment.
+
+#### Building the Docker Image
+
+To build the Docker image:
+
+```bash
+docker build -t angular-trips-app .
+```
+
+#### Running with Docker Compose
+
+To run the application using Docker Compose:
+
+```bash
+docker-compose up
+```
+
+The application will be available at `http://localhost`.
+
+#### How Docker Deployment Works
+
+The Docker setup uses a multi-stage build:
+
+1. **Build Stage**: Uses Node.js 20 Alpine to build all localized versions of the application
+2. **Production Stage**: Uses Nginx Alpine to serve the static files
+
+#### Routes and Localization
+
+The application serves three localized versions with the following URL structure:
+
+- **`/`** - Redirects to `/en-US/` (default language)
+- **`/en-US/`** - English version of the application
+- **`/sq/`** - Albanian (Shqip) version
+- **`/it/`** - Italian (Italiano) version
+
+Each route serves a complete, independently built version of the application with:
+- Translated UI strings
+- Localized base href (`<base href="/en-US/">`, etc.)
+- Proper routing context for Angular's router
+
+#### Nginx Configuration
+
+The Nginx server is configured to:
+- Serve each locale from its respective directory (`/usr/share/nginx/html/{locale}/`)
+- Handle Angular's client-side routing with `try_files` directive
+- Redirect the root path to the default English locale
+- Compress responses with gzip for better performance
+
+Users can access different language versions by navigating directly to the locale-specific URLs, and all Angular routing within each locale works seamlessly.
 
 ### Testing
 
