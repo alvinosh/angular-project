@@ -14,15 +14,18 @@
       "sourceRoot": "src",
       "prefix": "app",
       "i18n": {
-        "sourceLocale": "en-US",
+        "sourceLocale": {
+          "code": "en-US",
+          "baseHref": "/en-US/"
+        },
         "locales": {
           "sq": {
             "translation": "src/locale/messages.sq.xlf",
-            "baseHref": ""
+            "baseHref": "/sq/"
           },
           "it": {
             "translation": "src/locale/messages.it.xlf",
-            "baseHref": ""
+            "baseHref": "/it/"
           }
         }
       },
@@ -55,7 +58,8 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "localize": true
             },
             "development": {
               "optimization": false,
@@ -67,6 +71,9 @@
                   "with": "src/environments/environment.development.ts"
                 }
               ]
+            },
+            "en-US": {
+              "localize": ["en-US"]
             },
             "sq": {
               "localize": ["sq"]
