@@ -12,13 +12,15 @@ describe('Trip App E2E Tests', () => {
       cy.get('app-trip-card').should('have.length.greaterThan', 0);
 
       // Check that each card has required elements
-      cy.get('app-trip-card').first().within(() => {
-        cy.get('img').should('be.visible');
-        cy.get('h3').should('not.be.empty');
-        cy.contains('Price:').should('be.visible');
-        cy.contains('Rating:').should('be.visible');
-        cy.contains('CO2:').should('be.visible');
-      });
+      cy.get('app-trip-card')
+        .first()
+        .within(() => {
+          cy.get('img').should('be.visible');
+          cy.get('h3').should('not.be.empty');
+          cy.contains('Price:').should('be.visible');
+          cy.contains('Rating:').should('be.visible');
+          cy.contains('CO2:').should('be.visible');
+        });
     });
 
     it('should display trip of the day section', () => {
@@ -160,7 +162,7 @@ describe('Trip App E2E Tests', () => {
   describe('Pagination', () => {
     it('should display pagination when there are multiple pages', () => {
       // Check if pagination exists
-      cy.get('app-pagination').then($pagination => {
+      cy.get('app-pagination').then(($pagination) => {
         if ($pagination.length > 0) {
           // If pagination exists, test it
           cy.get('button').contains('Next').should('be.visible');

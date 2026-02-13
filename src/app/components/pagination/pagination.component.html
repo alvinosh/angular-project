@@ -1,67 +1,82 @@
 @if (totalPages() > 1) {
   <div
-    class="mt-6 flex justify-center items-center gap-3"
+    class="mt-10 flex flex-wrap justify-center gap-4 py-4"
     role="navigation"
-    i18n-aria-label
     aria-label="Pagination"
   >
-    <button
-      (click)="onPreviousPage()"
-      [disabled]="currentPage() === 1"
-      class="px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 disabled:bg-gray-50 dark:disabled:bg-gray-900 disabled:cursor-not-allowed text-gray-700 dark:text-gray-300 disabled:text-gray-400 dark:disabled:text-gray-600 rounded-lg font-medium transition-colors duration-200 focus:ring-2 focus:ring-primary-500 focus:outline-none"
-      i18n-aria-label
-      aria-label="Previous page"
-      i18n
-    >
-      ← Previous
-    </button>
-
     <div
-      class="flex items-center gap-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-2 shadow-sm"
+      class="flex items-center gap-2 p-1 bg-gray-100/50 dark:bg-gray-800/50 border border-gray-200/50 dark:border-gray-700/50 rounded-full"
     >
-      <span class="text-sm text-gray-600 dark:text-gray-300 font-medium" i18n>
-        {{ pageText() }}
-      </span>
+      <button
+        (click)="onPreviousPage()"
+        [disabled]="currentPage() === 1"
+        class="flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-gray-700 shadow-sm text-gray-600 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95"
+        aria-label="Previous page"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          ></path>
+        </svg>
+      </button>
+
+      <div class="px-4 py-1">
+        <span class="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400">
+          {{ pageText() }}
+        </span>
+      </div>
+
+      <button
+        (click)="onNextPage()"
+        [disabled]="currentPage() === totalPages()"
+        class="flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-gray-700 shadow-sm text-gray-600 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all active:scale-95"
+        aria-label="Next page"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5l7 7-7 7"
+          ></path>
+        </svg>
+      </button>
     </div>
 
-    <div class="flex items-center gap-2">
-      <div class="relative">
-        <label for="go-to-page" class="sr-only" i18n>Go to page</label>
-        <input
-          id="go-to-page"
-          type="number"
-          [value]="goToPageInput()"
-          (input)="onGoToPageInputChange($event)"
-          (keydown.enter)="onGoToPage()"
-          min="1"
-          [max]="totalPages()"
-          class="w-20 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-center text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-all duration-200 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-          i18n-placeholder
-          placeholder="Go to..."
-          i18n-aria-label
-          aria-label="Enter page number"
-        />
-      </div>
+    <div
+      class="flex items-center h-11 pl-4 pr-1 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-full shadow-sm focus-within:ring-2 focus-within:ring-primary-500/20 focus-within:border-primary-500 transition-all"
+    >
+      <label
+        for="go-to-page"
+        class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mr-2 whitespace-nowrap"
+        i18n
+      >
+        Jump to
+      </label>
+
+      <input
+        id="go-to-page"
+        type="number"
+        [value]="goToPageInput()"
+        (input)="onGoToPageInputChange($event)"
+        (keydown.enter)="onGoToPage()"
+        min="1"
+        [max]="totalPages()"
+        class="w-10 bg-transparent text-sm font-bold focus:outline-none dark:text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+        placeholder="0"
+        aria-label="Enter page number"
+      />
+
       <button
         (click)="onGoToPage()"
-        class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:bg-primary-500 disabled:cursor-not-allowed font-medium transition-colors duration-200 focus:ring-2 focus:ring-primary-500 focus:outline-none"
-        i18n-aria-label
+        class="flex items-center justify-center w-9 h-9 bg-primary-600 hover:bg-primary-500 text-white text-[11px] font-black uppercase rounded-full transition-all active:scale-90 shadow-md shadow-primary-500/30"
         aria-label="Go to page"
-        i18n
       >
         Go
       </button>
     </div>
-
-    <button
-      (click)="onNextPage()"
-      [disabled]="currentPage() === totalPages()"
-      class="px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 disabled:bg-gray-50 dark:disabled:bg-gray-900 disabled:cursor-not-allowed text-gray-700 dark:text-gray-300 disabled:text-gray-400 dark:disabled:text-gray-600 rounded-lg font-medium transition-colors duration-200 focus:ring-2 focus:ring-primary-500 focus:outline-none"
-      i18n-aria-label
-      aria-label="Next page"
-      i18n
-    >
-      Next →
-    </button>
   </div>
 }

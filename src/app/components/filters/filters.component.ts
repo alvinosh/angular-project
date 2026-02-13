@@ -49,7 +49,7 @@ export class FiltersComponent {
     const target = event.target as HTMLSelectElement;
     const newSort: SortState = {
       by: target.value as 'title' | 'price' | 'rating' | 'creationDate',
-      order: this.sort().order
+      order: this.sort().order,
     };
     this.filtersChange.emit({ type: 'sort', value: newSort });
   }
@@ -58,7 +58,7 @@ export class FiltersComponent {
     const currentSort = this.sort();
     const newSort: SortState = {
       by: currentSort.by,
-      order: currentSort.order === 'ASC' ? 'DESC' : 'ASC'
+      order: currentSort.order === 'ASC' ? 'DESC' : 'ASC',
     };
     this.filtersChange.emit({ type: 'sort', value: newSort });
   }
@@ -74,26 +74,54 @@ export class FiltersComponent {
 
   onMinPriceChange(event: Event) {
     const target = event.target as HTMLInputElement;
-    const value = target.value ? +target.value : undefined;
-    this.filtersChange.emit({ type: 'minPrice', value });
+    const value = target.value;
+    const numValue = parseInt(value, 10);
+    if (value === '' || (Number.isInteger(numValue) && numValue > 0)) {
+      this.filtersChange.emit({ type: 'minPrice', value: value === '' ? undefined : numValue });
+    } else {
+      // Invalid input: clear the filter and reset the input
+      this.filtersChange.emit({ type: 'minPrice', value: undefined });
+      target.value = '';
+    }
   }
 
   onMaxPriceChange(event: Event) {
     const target = event.target as HTMLInputElement;
-    const value = target.value ? +target.value : undefined;
-    this.filtersChange.emit({ type: 'maxPrice', value });
+    const value = target.value;
+    const numValue = parseInt(value, 10);
+    if (value === '' || (Number.isInteger(numValue) && numValue > 0)) {
+      this.filtersChange.emit({ type: 'maxPrice', value: value === '' ? undefined : numValue });
+    } else {
+      // Invalid input: clear the filter and reset the input
+      this.filtersChange.emit({ type: 'maxPrice', value: undefined });
+      target.value = '';
+    }
   }
 
   onMinRatingChange(event: Event) {
     const target = event.target as HTMLInputElement;
-    const value = target.value ? +target.value : undefined;
-    this.filtersChange.emit({ type: 'minRating', value });
+    const value = target.value;
+    const numValue = parseFloat(value);
+    if (value === '' || (!isNaN(numValue) && numValue >= 0 && numValue <= 5)) {
+      this.filtersChange.emit({ type: 'minRating', value: value === '' ? undefined : numValue });
+    } else {
+      // Invalid input: clear the filter and reset the input
+      this.filtersChange.emit({ type: 'minRating', value: undefined });
+      target.value = '';
+    }
   }
 
   onMaxRatingChange(event: Event) {
     const target = event.target as HTMLInputElement;
-    const value = target.value ? +target.value : undefined;
-    this.filtersChange.emit({ type: 'maxRating', value });
+    const value = target.value;
+    const numValue = parseFloat(value);
+    if (value === '' || (!isNaN(numValue) && numValue >= 0 && numValue <= 5)) {
+      this.filtersChange.emit({ type: 'maxRating', value: value === '' ? undefined : numValue });
+    } else {
+      // Invalid input: clear the filter and reset the input
+      this.filtersChange.emit({ type: 'maxRating', value: undefined });
+      target.value = '';
+    }
   }
 
   onTagInput(event: Event) {
@@ -130,7 +158,9 @@ export class FiltersComponent {
     }
   }
 
-  onFilterKeydown(event: KeyboardEvent, filterType: string) {
+  onFilterKeydown(event: KeyboardEvent, _filterType: string) {
+    void _filterType; // Unused parameter, can be used for specific filter handling if needed
+
     // Allow normal typing and navigation
     if (
       event.key.length === 1 || // Regular characters
@@ -149,29 +179,6 @@ export class FiltersComponent {
       (event.ctrlKey && (event.key === 'x' || event.key === 'X'))
     ) {
       // Ctrl+X
-      // Check if backspace/delete would clear the field
-      if ((event.key === 'Backspace' || event.key === 'Delete') && (event.target as HTMLInputElement).value.length <= 1) {
-        // Field will become empty, treat as clear
-        event.preventDefault();
-        switch (filterType) {
-          case 'title':
-            this.filtersChange.emit({ type: 'title', value: '' });
-            break;
-          case 'minPrice':
-            this.filtersChange.emit({ type: 'minPrice', value: undefined });
-            break;
-          case 'maxPrice':
-            this.filtersChange.emit({ type: 'maxPrice', value: undefined });
-            break;
-          case 'minRating':
-            this.filtersChange.emit({ type: 'minRating', value: undefined });
-            break;
-          case 'maxRating':
-            this.filtersChange.emit({ type: 'maxRating', value: undefined });
-            break;
-        }
-        return;
-      }
       return; // Allow these keys
     }
 

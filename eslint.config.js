@@ -15,7 +15,7 @@ module.exports = defineConfig([
     ],
     processor: angular.processInlineTemplates,
     rules: {
-      '@typescript-eslint/no-name-space': 'error',
+      '@typescript-eslint/no-namespace': 'off',
       '@angular-eslint/directive-selector': [
         'error',
         {

@@ -9,11 +9,12 @@ describe('TripsService', () => {
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
+    TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       providers: [
         provideHttpClientTesting(),
         TripsService,
-        { provide: API_BASE, useValue: 'https://api.example.com/' }
+        { provide: API_BASE, useValue: 'https://api.example.com/' },
       ],
     });
     service = TestBed.inject(TripsService);
@@ -84,5 +85,53 @@ describe('TripsService', () => {
     const req = httpMock.expectOne('https://api.example.com//v1/trips/1');
     expect(req.request.method).toBe('GET');
     req.flush(mockTrip);
+  });
+
+  it('should handle error when getting trips', () => {
+    service.getTrips().subscribe({
+      next: () => {
+        throw new Error('should have failed');
+      },
+      error: (error) => expect(error).toBeTruthy(),
+    });
+
+    const req = httpMock.expectOne('https://api.example.com//v1/trips');
+    req.flush('Error', { status: 500, statusText: 'Server Error' });
+  });
+
+  it('should handle error when getting trip by id', () => {
+    service.getTrip('1').subscribe({
+      next: () => {
+        throw new Error('should have failed');
+      },
+      error: (error) => expect(error).toBeTruthy(),
+    });
+
+    const req = httpMock.expectOne('https://api.example.com//v1/trips/1');
+    req.flush('Error', { status: 404, statusText: 'Not Found' });
+  });
+
+  it('should handle malformed response for trips', () => {
+    const malformedResponse = { invalid: 'data' };
+
+    service.getTrips().subscribe((response) => {
+      expect(response).toBeDefined();
+      // Assuming service handles malformed data gracefully
+    });
+
+    const req = httpMock.expectOne('https://api.example.com//v1/trips');
+    req.flush(malformedResponse);
+  });
+
+  it('should handle empty response for trips', () => {
+    const emptyResponse = { items: [], total: 0, page: 1, limit: 10 };
+
+    service.getTrips().subscribe((response) => {
+      expect(response.items.length).toBe(0);
+      expect(response.total).toBe(0);
+    });
+
+    const req = httpMock.expectOne('https://api.example.com//v1/trips');
+    req.flush(emptyResponse);
   });
 });

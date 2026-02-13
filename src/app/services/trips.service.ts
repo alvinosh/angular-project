@@ -4,7 +4,6 @@ import { Observable, shareReplay, tap } from 'rxjs';
 import { Trip, TripsListQueryParams, TripsListResponse } from '../models/trip.model';
 import { API_BASE } from '../app.config';
 
-
 @Injectable({
   providedIn: 'root',
 })

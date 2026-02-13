@@ -1,48 +1,68 @@
-<div class="mb-4 flex gap-4 items-center">
-  <label for="sort-select" class="sr-only" i18n>Sort trips by</label>
-  <select
-    id="sort-select"
-    [value]="sort().by"
-    (change)="onSortChange($event)"
-    class="border border-gray-300 dark:border-gray-600 rounded p-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500"
-    i18n-aria-label
-    aria-label="Sort by"
+<div class="mb-6 flex flex-wrap gap-3 items-center">
+  <div
+    class="flex items-center gap-2 p-1.5 bg-gray-100/50 dark:bg-gray-800/50 rounded-full border border-gray-200/50 dark:border-gray-700/50"
   >
-    <option value="title" i18n>Name</option>
-    <option value="price" i18n>Price</option>
-    <option value="rating" i18n>Rating</option>
-    <option value="creationDate" i18n>Creation Date</option>
-  </select>
+    <label for="sort-select" class="sr-only" i18n>Sort trips by</label>
+    <select
+      id="sort-select"
+      [value]="sort().by"
+      (change)="onSortChange($event)"
+      class="bg-transparent pl-4 pr-2 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-200 focus:outline-none cursor-pointer"
+      i18n-aria-label
+      aria-label="Sort by"
+    >
+      <option value="title" i18n>Name</option>
+      <option value="price" i18n>Price</option>
+      <option value="rating" i18n>Rating</option>
+      <option value="creationDate" i18n>Creation Date</option>
+    </select>
 
-  <button
-    (click)="onSortOrderToggle()"
-    class="border border-gray-300 dark:border-gray-600 rounded p-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-    [attr.aria-label]="getSortAriaLabel()"
-  >
-    {{ sort().order === 'ASC' ? '↑' : '↓' }}
-  </button>
+    <button
+      (click)="onSortOrderToggle()"
+      class="flex items-center justify-center w-8 h-8 rounded-full bg-white dark:bg-gray-700 shadow-sm text-gray-600 dark:text-gray-200 hover:text-primary-600 dark:hover:text-primary-400 transition-all active:scale-95"
+      [attr.aria-label]="getSortAriaLabel()"
+    >
+      <span class="text-xs font-bold">{{ sort().order === 'ASC' ? '↑' : '↓' }}</span>
+    </button>
+  </div>
 
   <button
     (click)="onShowFiltersToggle()"
-    class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 focus:ring-2 focus:ring-green-300 dark:focus:ring-green-700 transition-colors"
+    class="group relative flex items-center gap-2 px-6 py-2.5 rounded-full bg-linear-to-tr from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white text-sm font-semibold shadow-md shadow-green-500/20 transition-all active:scale-95"
     [attr.aria-label]="getShowFiltersAriaLabel()"
   >
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+      ></path>
+    </svg>
     {{ getShowFiltersText() }}
   </button>
 </div>
 
-<!-- Filters Section -->
 @if (showFilters()) {
-  <div class="mb-6 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg">
-    <div class="flex justify-between items-start mb-3">
-      <h3 class="text-lg font-semibold text-gray-900 dark:text-white" i18n>Filters</h3>
-      <span class="text-xs text-gray-500 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded" i18n>
-        Press <kbd class="bg-white dark:bg-gray-600 px-1 rounded text-xs">Esc</kbd> to clear field
+  <div
+    class="mb-8 p-6 bg-white dark:bg-gray-900 border border-gray-200/60 dark:border-gray-700/60 rounded-3xl shadow-xl shadow-gray-200/20 dark:shadow-none animate-in fade-in slide-in-from-top-4 duration-300"
+  >
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-lg font-bold tracking-tight text-gray-900 dark:text-white" i18n>Filters</h3>
+      <span
+        class="text-[10px] uppercase tracking-widest font-bold text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full"
+        i18n
+      >
+        Esc to clear
       </span>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div>
-        <label for="title-filter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" i18n
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="space-y-1.5">
+        <label
+          for="title-filter"
+          class="ml-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+          i18n
           >Title</label
         >
         <input
@@ -52,16 +72,16 @@
           (input)="onTitleFilterChange($event)"
           (blur)="onTitleFilterChange($event)"
           (keydown)="onFilterKeydown($event, 'title')"
-          i18n-placeholder
           placeholder="Search by title..."
-          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-          i18n-aria-label
-          aria-label="Filter by title"
+          class="w-full px-5 py-2.5 bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-full text-sm focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all dark:text-white"
         />
       </div>
 
-      <div>
-        <label for="min-price" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" i18n
+      <div class="space-y-1.5">
+        <label
+          for="min-price"
+          class="ml-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+          i18n
           >Min Price</label
         >
         <input
@@ -72,15 +92,15 @@
           (blur)="onMinPriceChange($event)"
           (keydown)="onFilterKeydown($event, 'minPrice')"
           placeholder="0"
-          min="0"
-          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-          i18n-aria-label
-          aria-label="Minimum price filter"
+          class="w-full px-5 py-2.5 bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-full text-sm focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all dark:text-white"
         />
       </div>
 
-      <div>
-        <label for="max-price" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" i18n
+      <div class="space-y-1.5">
+        <label
+          for="max-price"
+          class="ml-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+          i18n
           >Max Price</label
         >
         <input
@@ -91,15 +111,15 @@
           (blur)="onMaxPriceChange($event)"
           (keydown)="onFilterKeydown($event, 'maxPrice')"
           placeholder="10000"
-          min="0"
-          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-          i18n-aria-label
-          aria-label="Maximum price filter"
+          class="w-full px-5 py-2.5 bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-full text-sm focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all dark:text-white"
         />
       </div>
 
-      <div>
-        <label for="min-rating" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" i18n
+      <div class="space-y-1.5">
+        <label
+          for="min-rating"
+          class="ml-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+          i18n
           >Min Rating</label
         >
         <input
@@ -113,14 +133,15 @@
           min="0"
           max="5"
           step="0.1"
-          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-          i18n-aria-label
-          aria-label="Minimum rating filter"
+          class="w-full px-5 py-2.5 bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-full text-sm focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all dark:text-white"
         />
       </div>
 
-      <div>
-        <label for="max-rating" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" i18n
+      <div class="space-y-1.5">
+        <label
+          for="max-rating"
+          class="ml-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+          i18n
           >Max Rating</label
         >
         <input
@@ -134,60 +155,58 @@
           min="0"
           max="5"
           step="0.1"
-          class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-          i18n-aria-label
-          aria-label="Maximum rating filter"
+          class="w-full px-5 py-2.5 bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-full text-sm focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 outline-none transition-all dark:text-white"
         />
       </div>
 
-      <div>
-        <label for="tags-filter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" i18n
+      <div class="space-y-1.5">
+        <label
+          for="tags-filter"
+          class="ml-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+          i18n
           >Tags</label
         >
-        <div class="border border-gray-300 dark:border-gray-600 rounded-md p-2 focus-within:ring-2 focus-within:ring-primary-500 focus-within:border-primary-500 bg-white dark:bg-gray-800">
-          <!-- Display existing tags as pills -->
-          @if (filters().tags.length > 0) {
-            <div class="flex gap-1 mb-2">
-              @for (tag of filters().tags; track tag) {
-                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200">
-                  {{ tag }}
-                  <button
-                    (click)="onRemoveTag(tag)"
-                    class="ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-primary-200 dark:hover:bg-primary-800 focus:outline-none focus:ring-1 focus:ring-primary-300 dark:focus:ring-primary-700"
-                    [attr.aria-label]="getRemoveTagAriaLabel(tag)"
-                  >
-                    ×
-                  </button>
-                </span>
-              }
-            </div>
+        <div
+          class="min-h-10.5 px-4 py-1.5 border border-gray-200 dark:border-gray-700 rounded-[22px] bg-gray-50 dark:bg-gray-800/50 focus-within:ring-2 focus-within:ring-primary-500/20 focus-within:border-primary-500 transition-all flex flex-wrap gap-2 items-center"
+        >
+          @for (tag of filters().tags; track tag) {
+            <span
+              class="inline-flex items-center pl-3 pr-1 py-1 rounded-full text-xs font-semibold bg-primary-500/10 text-primary-700 dark:text-primary-300 border border-primary-500/20 filter-tag"
+            >
+              {{ tag }}
+              <button
+                (click)="onRemoveTag(tag)"
+                [attr.aria-label]="getRemoveTagAriaLabel(tag)"
+                class="ml-1 p-0.5 rounded-full hover:bg-primary-500/20 transition-colors"
+              >
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  />
+                </svg>
+              </button>
+            </span>
           }
-          <!-- Input for new tags -->
           <input
             id="tags-filter"
             type="text"
             (keydown)="onTagKeydown($event)"
             (input)="onTagInput($event)"
-            i18n-placeholder
-            placeholder="Type a tag and press Enter or comma..."
-            class="w-full outline-none bg-transparent text-gray-900 dark:text-white"
-            i18n-aria-label
-            aria-label="Add tags"
+            placeholder="Add tag... *API Not Working :("
+            class="flex-1 min-w-20 bg-transparent outline-none text-sm dark:text-white"
           />
         </div>
-        <p class="text-xs text-gray-500 dark:text-gray-300 mt-1" i18n>Press Enter or comma to add tags (Tags API Not Working)</p>
       </div>
     </div>
 
-    <div class="mt-4 flex justify-end">
+    <div class="mt-8 flex justify-end">
       <button
         (click)="onClearFilters()"
-        class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700 transition-colors"
-        i18n-aria-label
+        class="px-8 py-2 rounded-full text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors"
         aria-label="Clear all filters"
         i18n
       >
-        Clear Filters
+        Clear all filters
       </button>
     </div>
   </div>

@@ -4,7 +4,6 @@ import {
   computed,
   effect,
   inject,
-  OnInit,
   signal,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,7 +11,12 @@ import { CommonModule } from '@angular/common';
 import { TripsService } from '../../services/trips.service';
 import { Trip } from '../../models/trip.model';
 import { TripCardComponent } from '../../components/trip-card/trip-card.component';
-import { FiltersComponent, SortState, FilterState, FiltersChangeEvent } from '../../components/filters/filters.component';
+import {
+  FiltersComponent,
+  SortState,
+  FilterState,
+  FiltersChangeEvent,
+} from '../../components/filters/filters.component';
 import { PaginationComponent } from '../../components/pagination/pagination.component';
 
 @Component({
@@ -24,7 +28,7 @@ import { PaginationComponent } from '../../components/pagination/pagination.comp
     class: 'block',
   },
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   private readonly tripsService = inject(TripsService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
@@ -90,7 +94,7 @@ export class HomeComponent implements OnInit {
   // Consolidated inputs for filters component
   currentSort = computed<SortState>(() => ({
     by: this.sortBy(),
-    order: this.sortOrder()
+    order: this.sortOrder(),
   }));
 
   currentFilters = computed<FilterState>(() => ({
@@ -99,67 +103,71 @@ export class HomeComponent implements OnInit {
     maxPrice: this.maxPrice(),
     minRating: this.minRating(),
     maxRating: this.maxRating(),
-    tags: this.tagsArray()
+    tags: this.tagsArray(),
   }));
 
   constructor() {
-    // Effect to update URL when state changes
+    // Initialize state from URL params ONCE (not in an effect to avoid circular dependency)
+    const initialParams = this.route.snapshot.queryParams;
+    if (initialParams['sortBy']) {
+      this.sortBy.set(initialParams['sortBy'] as 'title' | 'price' | 'rating' | 'creationDate');
+    }
+    if (initialParams['sortOrder']) {
+      this.sortOrder.set(initialParams['sortOrder'] as 'ASC' | 'DESC');
+    }
+    if (initialParams['page']) {
+      this.currentPage.set(+initialParams['page']);
+    }
+    if (initialParams['titleFilter']) {
+      this.titleFilter.set(initialParams['titleFilter']);
+    }
+    if (initialParams['minPrice']) {
+      this.minPrice.set(+initialParams['minPrice']);
+    }
+    if (initialParams['maxPrice']) {
+      this.maxPrice.set(+initialParams['maxPrice']);
+    }
+    if (initialParams['minRating']) {
+      this.minRating.set(+initialParams['minRating']);
+    }
+    if (initialParams['maxRating']) {
+      this.maxRating.set(+initialParams['maxRating']);
+    }
+    if (initialParams['tags']) {
+      const tags = initialParams['tags']
+        .split(',')
+        .map((tag: string) => tag.trim())
+        .filter((tag: string) => tag.length > 0);
+      this.tagsArray.set(tags);
+    }
+
+    // Show filters if there are active filters from URL
+    if (this.hasActiveFilters()) {
+      this.showFilters.set(true);
+    }
+
+    // Single effect to sync state -> URL (one direction only)
     effect(() => {
       const params = this.currentQueryParams();
-      const queryParams: Record<string, string | number | boolean | undefined> = {
-        sortBy: params.sortBy,
-        sortOrder: params.sortOrder,
-        page: params.page,
-        titleFilter: params.titleFilter,
-        minPrice: params.minPrice,
-        maxPrice: params.maxPrice,
-        minRating: params.minRating,
-        maxRating: params.maxRating,
-        tags: params.tags,
-      };
+      const queryParams: Record<string, string | number | null> = {};
+
+      // Always set sortBy and sortOrder (required params)
+      queryParams['sortBy'] = params.sortBy;
+      queryParams['sortOrder'] = params.sortOrder;
+      queryParams['page'] = params.page;
+
+      // Set optional params or null to remove them
+      queryParams['titleFilter'] = params.titleFilter || null;
+      queryParams['minPrice'] = params.minPrice ?? null;
+      queryParams['maxPrice'] = params.maxPrice ?? null;
+      queryParams['minRating'] = params.minRating ?? null;
+      queryParams['maxRating'] = params.maxRating ?? null;
+      queryParams['tags'] = params.tags || null;
 
       this.router.navigate([], {
         queryParams,
-        queryParamsHandling: 'merge',
+        replaceUrl: true,
       });
-    });
-  }
-
-  ngOnInit() {
-    // Initialize state from URL params
-    this.route.queryParams.subscribe((params) => {
-      if (params['sortBy']) {
-        this.sortBy.set(params['sortBy']);
-      }
-      if (params['sortOrder']) {
-        this.sortOrder.set(params['sortOrder']);
-      }
-      if (params['page']) {
-        this.currentPage.set(+params['page']);
-      }
-      if (params['titleFilter']) {
-        this.titleFilter.set(params['titleFilter']);
-      }
-      if (params['minPrice']) {
-        this.minPrice.set(+params['minPrice']);
-      }
-      if (params['maxPrice']) {
-        this.maxPrice.set(+params['maxPrice']);
-      }
-      if (params['minRating']) {
-        this.minRating.set(+params['minRating']);
-      }
-      if (params['maxRating']) {
-        this.maxRating.set(+params['maxRating']);
-      }
-      if (params['tags']) {
-        this.tagsArray.set(params['tags'].split(',').map((tag: string) => tag.trim()).filter((tag: string) => tag.length > 0));
-      }
-
-      // Show filters if there are active filters
-      if (this.hasActiveFilters()) {
-        this.showFilters.set(true);
-      }
     });
 
     // Initial load
@@ -185,8 +193,6 @@ export class HomeComponent implements OnInit {
       },
     });
   }
-
-
 
   clearCache() {
     this.tripsService.clearAllCache();
@@ -269,14 +275,14 @@ export class HomeComponent implements OnInit {
       case 'tagAdd': {
         const trimmedTag = event.value.trim();
         if (trimmedTag && !this.tagsArray().includes(trimmedTag)) {
-          this.tagsArray.update(tags => [...tags, trimmedTag]);
+          this.tagsArray.update((tags) => [...tags, trimmedTag]);
           this.currentPage.set(1);
           this.loadTrips();
         }
         break;
       }
       case 'tagRemove':
-        this.tagsArray.update(tags => tags.filter(tag => tag !== event.value));
+        this.tagsArray.update((tags) => tags.filter((tag) => tag !== event.value));
         this.currentPage.set(1);
         this.loadTrips();
         break;

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { vi } from 'vitest';
 import { HomeComponent } from './home.component';
 import { TripsService } from '../../services/trips.service';
@@ -46,7 +46,10 @@ describe('HomeComponent', () => {
   beforeEach(async () => {
     const tripsServiceSpy = { getTrips: vi.fn() };
     const routerSpy = { navigate: vi.fn() };
-    const activatedRouteSpy = { queryParams: of({}) };
+    const activatedRouteSpy = {
+      queryParams: of({}),
+      snapshot: { queryParams: {} },
+    };
 
     // Set up mocks before component creation
     tripsServiceSpy.getTrips.mockReturnValue(
@@ -151,9 +154,10 @@ describe('HomeComponent', () => {
     component.currentPage.set(3);
     component.total.set(25);
     component.limit.set(12);
+    const initialCallCount = vi.mocked(mockTripsService.getTrips).mock.calls.length;
     component.onNextPage();
     expect(component.currentPage()).toBe(3);
-    expect(mockTripsService.getTrips).not.toHaveBeenCalled();
+    expect(vi.mocked(mockTripsService.getTrips).mock.calls.length).toBe(initialCallCount);
   });
 
   it('should navigate to previous page', () => {
@@ -175,9 +179,10 @@ describe('HomeComponent', () => {
 
   it('should not navigate before first page', () => {
     component.currentPage.set(1);
+    const initialCallCount = vi.mocked(mockTripsService.getTrips).mock.calls.length;
     component.onPreviousPage();
     expect(component.currentPage()).toBe(1);
-    expect(mockTripsService.getTrips).not.toHaveBeenCalled();
+    expect(vi.mocked(mockTripsService.getTrips).mock.calls.length).toBe(initialCallCount);
   });
 
   it('should navigate to trip detail', () => {
@@ -213,9 +218,10 @@ describe('HomeComponent', () => {
     component.total.set(25);
     component.limit.set(12);
     component.goToPageInput.set('10'); // Beyond total pages
+    const initialCallCount = vi.mocked(mockTripsService.getTrips).mock.calls.length;
     component.onGoToPage();
     expect(component.currentPage()).toBe(1); // Should remain the same
-    expect(mockTripsService.getTrips).not.toHaveBeenCalled();
+    expect(vi.mocked(mockTripsService.getTrips).mock.calls.length).toBe(initialCallCount);
   });
 
   it('should display trips including trip of the day', () => {
@@ -223,5 +229,31 @@ describe('HomeComponent', () => {
     component.tripOfTheDay.set(mockTrips[0]);
     const displayed = component.displayedTrips();
     expect(displayed).toEqual(mockTrips); // Now just returns all trips
+  });
+
+  it('should handle error when loading trips', () => {
+    vi.spyOn(mockTripsService, 'getTrips').mockReturnValue(
+      throwError(() => new Error('Network error')),
+    );
+
+    component.loadTrips();
+    expect(component.error()).toBe('Failed to load trips');
+    expect(component.loading()).toBe(false);
+  });
+
+  it('should handle goto page with non-numeric input', () => {
+    component.goToPageInput.set('abc');
+    const initialCallCount = vi.mocked(mockTripsService.getTrips).mock.calls.length;
+    component.onGoToPage();
+    expect(component.currentPage()).toBe(1); // Should remain the same
+    expect(vi.mocked(mockTripsService.getTrips).mock.calls.length).toBe(initialCallCount);
+  });
+
+  it('should handle goto page with zero', () => {
+    component.goToPageInput.set('0');
+    const initialCallCount = vi.mocked(mockTripsService.getTrips).mock.calls.length;
+    component.onGoToPage();
+    expect(component.currentPage()).toBe(1); // Should remain the same
+    expect(vi.mocked(mockTripsService.getTrips).mock.calls.length).toBe(initialCallCount);
   });
 });

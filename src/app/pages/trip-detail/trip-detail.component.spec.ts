@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, Router } from '@angular/router';
-import { of, throwError } from 'rxjs';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { of, throwError, BehaviorSubject } from 'rxjs';
 import { vi } from 'vitest';
 import { TripDetailComponent } from './trip-detail.component';
 import { TripsService } from '../../services/trips.service';
@@ -10,7 +10,9 @@ describe('TripDetailComponent', () => {
   let component: TripDetailComponent;
   let fixture: ComponentFixture<TripDetailComponent>;
   let mockTripsService: TripsService;
-  let mockRouter: Router;
+  let mockHistory: { back: () => void };
+
+  let mockParamMap: BehaviorSubject<ParamMap>;
 
   const mockTrip: Trip = {
     id: '1',
@@ -30,9 +32,19 @@ describe('TripDetailComponent', () => {
   beforeEach(async () => {
     const tripsServiceSpy = { getTrip: vi.fn() };
     const routerSpy = { navigate: vi.fn() };
+    mockParamMap = new BehaviorSubject<ParamMap>({
+      get: vi.fn().mockReturnValue('1'),
+      getAll: vi.fn().mockReturnValue(['1']),
+      has: vi.fn().mockReturnValue(true),
+      keys: [],
+    });
+
     const activatedRouteSpy = {
-      snapshot: { paramMap: { get: vi.fn().mockReturnValue('1') } },
+      paramMap: mockParamMap.asObservable(),
     };
+
+    mockHistory = { back: vi.fn() };
+    Object.defineProperty(window, 'history', { value: mockHistory, writable: true });
 
     await TestBed.configureTestingModule({
       imports: [TripDetailComponent],
@@ -46,7 +58,6 @@ describe('TripDetailComponent', () => {
     fixture = TestBed.createComponent(TripDetailComponent);
     component = fixture.componentInstance;
     mockTripsService = TestBed.inject(TripsService);
-    mockRouter = TestBed.inject(Router);
 
     mockTripsService.getTrip = vi.fn().mockReturnValue(of(mockTrip));
   });
@@ -55,30 +66,35 @@ describe('TripDetailComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load trip on init', () => {
-    component.ngOnInit();
+  it('should load trip on init', async () => {
+    // Component automatically loads trip when paramMap changes
+    await new Promise((resolve) => setTimeout(resolve, 0)); // Wait for effect
     expect(mockTripsService.getTrip).toHaveBeenCalledWith('1');
     expect(component.trip()).toEqual(mockTrip);
     expect(component.loading()).toBe(false);
   });
 
-  it('should handle error when loading trip', () => {
+  it('should handle error when loading trip', async () => {
     mockTripsService.getTrip = vi
       .fn()
       .mockReturnValue(throwError(() => new Error('Network error')));
     vi.spyOn(console, 'error').mockImplementation(() => undefined);
-    component.ngOnInit();
+
+    // Trigger component creation again to test error handling
+    fixture = TestBed.createComponent(TripDetailComponent);
+    component = fixture.componentInstance;
+
+    await new Promise((resolve) => setTimeout(resolve, 0)); // Wait for effect
     expect(component.error()).toBe('Failed to load trip details');
     expect(component.loading()).toBe(false);
   });
 
   it('should go back to home', () => {
     component.goBack();
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
+    expect(mockHistory.back).toHaveBeenCalled();
   });
 
   it('should display trip details', () => {
-    component.ngOnInit();
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.textContent).toContain('Test Trip');
@@ -86,5 +102,31 @@ describe('TripDetailComponent', () => {
     expect(compiled.textContent).toContain('100');
     expect(compiled.textContent).toContain('4.5');
     expect(compiled.textContent).toContain('adventure');
+  });
+
+  it('should handle invalid trip ID', async () => {
+    mockTripsService.getTrip = vi
+      .fn()
+      .mockReturnValue(throwError(() => new Error('Trip not found')));
+    vi.spyOn(console, 'error').mockImplementation(() => undefined);
+
+    // Trigger component creation again to test error handling
+    fixture = TestBed.createComponent(TripDetailComponent);
+    component = fixture.componentInstance;
+
+    await new Promise((resolve) => setTimeout(resolve, 0)); // Wait for effect
+    expect(component.error()).toBe('Failed to load trip details');
+  });
+
+  it('should have correct alt text for image', () => {
+    fixture.detectChanges();
+    const img = fixture.nativeElement.querySelector('img');
+    expect(img.getAttribute('alt')).toBe('Image of Test Trip');
+  });
+
+  it('should have correct aria label for back button', () => {
+    fixture.detectChanges();
+    const button = fixture.nativeElement.querySelector('button[aria-label]');
+    expect(button.getAttribute('aria-label')).toBe('Go back to home');
   });
 });

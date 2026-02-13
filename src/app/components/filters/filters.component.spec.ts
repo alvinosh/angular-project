@@ -36,7 +36,7 @@ describe('FiltersComponent', () => {
 
     expect(spy).toHaveBeenCalledWith({
       type: 'sort',
-      value: { by: 'price', order: 'ASC' }
+      value: { by: 'price', order: 'ASC' },
     });
   });
 
@@ -44,12 +44,14 @@ describe('FiltersComponent', () => {
     const spy = vi.fn();
     component.filtersChange.subscribe(spy);
 
-    const button = fixture.nativeElement.querySelector('button[aria-label*="Sort"]') as HTMLButtonElement;
+    const button = fixture.nativeElement.querySelector(
+      'button[aria-label*="Sort"]',
+    ) as HTMLButtonElement;
     button.click();
 
     expect(spy).toHaveBeenCalledWith({
       type: 'sort',
-      value: { by: 'title', order: 'DESC' }
+      value: { by: 'title', order: 'DESC' },
     });
   });
 
@@ -57,7 +59,9 @@ describe('FiltersComponent', () => {
     const spy = vi.fn();
     component.showFiltersToggle.subscribe(spy);
 
-    const button = fixture.nativeElement.querySelector('button[aria-label*="filters"]') as HTMLButtonElement;
+    const button = fixture.nativeElement.querySelector(
+      'button[aria-label*="filters"]',
+    ) as HTMLButtonElement;
     button.click();
 
     expect(spy).toHaveBeenCalled();
@@ -77,7 +81,7 @@ describe('FiltersComponent', () => {
 
     expect(spy).toHaveBeenCalledWith({
       type: 'title',
-      value: 'test'
+      value: 'test',
     });
   });
 
@@ -95,12 +99,11 @@ describe('FiltersComponent', () => {
 
     expect(spy).toHaveBeenCalledWith({
       type: 'minPrice',
-      value: 100
+      value: 100,
     });
   });
 
-  it('should emit filtersChange on max price input', () => {
-    // First show filters
+  it('should reject negative max price input', () => {
     fixture.componentRef.setInput('showFilters', true);
     fixture.detectChanges();
 
@@ -108,13 +111,71 @@ describe('FiltersComponent', () => {
     component.filtersChange.subscribe(spy);
 
     const input = fixture.nativeElement.querySelector('#max-price') as HTMLInputElement;
-    input.value = '500';
+    input.value = '-500';
     input.dispatchEvent(new Event('input'));
 
-    expect(spy).toHaveBeenCalledWith({
-      type: 'maxPrice',
-      value: 500
-    });
+    expect(spy).toHaveBeenCalledWith({ type: 'maxPrice', value: undefined });
+    expect(input.value).toBe('');
+  });
+
+  it('should reject min rating below 0', () => {
+    fixture.componentRef.setInput('showFilters', true);
+    fixture.detectChanges();
+
+    const spy = vi.fn();
+    component.filtersChange.subscribe(spy);
+
+    const input = fixture.nativeElement.querySelector('#min-rating') as HTMLInputElement;
+    input.value = '-1';
+    input.dispatchEvent(new Event('input'));
+
+    expect(spy).toHaveBeenCalledWith({ type: 'minRating', value: undefined });
+    expect(input.value).toBe('');
+  });
+
+  it('should reject min rating above 5', () => {
+    fixture.componentRef.setInput('showFilters', true);
+    fixture.detectChanges();
+
+    const spy = vi.fn();
+    component.filtersChange.subscribe(spy);
+
+    const input = fixture.nativeElement.querySelector('#min-rating') as HTMLInputElement;
+    input.value = '6';
+    input.dispatchEvent(new Event('input'));
+
+    expect(spy).toHaveBeenCalledWith({ type: 'minRating', value: undefined });
+    expect(input.value).toBe('');
+  });
+
+  it('should reject max rating below 0', () => {
+    fixture.componentRef.setInput('showFilters', true);
+    fixture.detectChanges();
+
+    const spy = vi.fn();
+    component.filtersChange.subscribe(spy);
+
+    const input = fixture.nativeElement.querySelector('#max-rating') as HTMLInputElement;
+    input.value = '-1';
+    input.dispatchEvent(new Event('input'));
+
+    expect(spy).toHaveBeenCalledWith({ type: 'maxRating', value: undefined });
+    expect(input.value).toBe('');
+  });
+
+  it('should reject max rating above 5', () => {
+    fixture.componentRef.setInput('showFilters', true);
+    fixture.detectChanges();
+
+    const spy = vi.fn();
+    component.filtersChange.subscribe(spy);
+
+    const input = fixture.nativeElement.querySelector('#max-rating') as HTMLInputElement;
+    input.value = '6';
+    input.dispatchEvent(new Event('input'));
+
+    expect(spy).toHaveBeenCalledWith({ type: 'maxRating', value: undefined });
+    expect(input.value).toBe('');
   });
 
   it('should emit filtersChange on clear filters button click', () => {
@@ -125,11 +186,13 @@ describe('FiltersComponent', () => {
     const spy = vi.fn();
     component.filtersChange.subscribe(spy);
 
-    const button = fixture.nativeElement.querySelector('button[aria-label="Clear all filters"]') as HTMLButtonElement;
+    const button = fixture.nativeElement.querySelector(
+      'button[aria-label="Clear all filters"]',
+    ) as HTMLButtonElement;
     button.click();
 
     expect(spy).toHaveBeenCalledWith({
-      type: 'clear'
+      type: 'clear',
     });
   });
 
@@ -138,7 +201,7 @@ describe('FiltersComponent', () => {
     fixture.componentRef.setInput('filters', { title: '', tags: ['tag1', 'tag2'] });
     fixture.detectChanges();
 
-    const tags = fixture.nativeElement.querySelectorAll('span.rounded-full');
+    const tags = fixture.nativeElement.querySelectorAll('span.filter-tag');
     expect(tags.length).toBe(2);
     expect(tags[0].textContent).toContain('tag1');
     expect(tags[1].textContent).toContain('tag2');
@@ -152,12 +215,44 @@ describe('FiltersComponent', () => {
     const spy = vi.fn();
     component.filtersChange.subscribe(spy);
 
-    const removeButton = fixture.nativeElement.querySelector('button[aria-label="Remove tag1 tag"]') as HTMLButtonElement;
+    const removeButton = fixture.nativeElement.querySelector(
+      'button[aria-label="Remove tag1 tag"]',
+    ) as HTMLButtonElement;
     removeButton.click();
 
     expect(spy).toHaveBeenCalledWith({
       type: 'tagRemove',
-      value: 'tag1'
+      value: 'tag1',
     });
+  });
+
+  it('should reject negative min price', () => {
+    fixture.componentRef.setInput('showFilters', true);
+    fixture.detectChanges();
+
+    const spy = vi.fn();
+    component.filtersChange.subscribe(spy);
+
+    const input = fixture.nativeElement.querySelector('#min-price') as HTMLInputElement;
+    input.value = '-100';
+    input.dispatchEvent(new Event('input'));
+
+    expect(spy).toHaveBeenCalledWith({ type: 'minPrice', value: undefined });
+    expect(input.value).toBe('');
+  });
+
+  it('should reject negative max price', () => {
+    fixture.componentRef.setInput('showFilters', true);
+    fixture.detectChanges();
+
+    const spy = vi.fn();
+    component.filtersChange.subscribe(spy);
+
+    const input = fixture.nativeElement.querySelector('#max-price') as HTMLInputElement;
+    input.value = '-50';
+    input.dispatchEvent(new Event('input'));
+
+    expect(spy).toHaveBeenCalledWith({ type: 'maxPrice', value: undefined });
+    expect(input.value).toBe('');
   });
 });

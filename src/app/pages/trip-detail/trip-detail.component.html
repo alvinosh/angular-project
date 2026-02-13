@@ -1,45 +1,122 @@
-<div class="container mx-auto p-4 bg-gray-50 dark:bg-gray-900 min-h-screen">
-  @if (loading()) {
-    <p class="text-gray-900 dark:text-white" i18n>Loading...</p>
-  } @else if (error()) {
-    <p class="text-red-500 dark:text-red-400">{{ error() }}</p>
-  } @else if (trip()) {
-    <div class="max-w-4xl mx-auto">
-      <button
-        (click)="goBack()"
-        class="mb-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700 transition-colors"
-        i18n-aria-label
-        aria-label="Go back to home"
-        i18n
+<div
+  class="min-h-screen text-gray-900 dark:text-gray-100 selection:bg-blue-100 dark:selection:bg-blue-900/30"
+>
+  <div class="max-w-5xl mx-auto px-4 py-8">
+    @if (loading()) {
+      <div class="flex flex-col items-center justify-center py-20 space-y-4">
+        <div
+          class="w-12 h-12 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin"
+        ></div>
+        <p class="text-sm font-medium text-gray-500 animate-pulse" i18n>Loading trip details...</p>
+      </div>
+    } @else if (error()) {
+      <div
+        class="p-4 rounded-xl bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800/30 text-red-600 dark:text-red-400"
       >
-        ← Back
-      </button>
+        {{ error() }}
+      </div>
+    } @else if (trip()) {
+      <div class="flex items-center justify-between mb-8">
+        <button
+          (click)="goBack()"
+          class="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors group"
+          aria-label="Go back to home"
+          i18n
+        >
+          <span class="transition-transform group-hover:-translate-x-1">←</span> Back to Explore
+        </button>
 
-      <img
-        [src]="trip()!.imageUrl"
-        [alt]="getAlt()"
-        class="w-full h-96 object-cover rounded mb-4"
-      />
-
-      <h1 class="text-3xl font-bold mb-4 text-gray-900 dark:text-white">{{ trip()!.title }}</h1>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
-          <p class="text-gray-900 dark:text-white" i18n><strong>Price:</strong> {{ trip()!.price }}</p>
-          <p class="text-gray-900 dark:text-white" i18n><strong>Rating:</strong> {{ trip()!.rating }} ({{ trip()!.nrOfRatings }} reviews)</p>
-          <p class="text-gray-900 dark:text-white" i18n><strong>Vertical Type:</strong> {{ trip()!.verticalType }}</p>
-          <p class="text-gray-900 dark:text-white" i18n><strong>CO2:</strong> {{ trip()!.co2 }} kg</p>
-          <p class="text-gray-900 dark:text-white" i18n><strong>Creation Date:</strong> {{ trip()!.creationDate }}</p>
-        </div>
-        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
-          <p class="text-gray-900 dark:text-white" i18n><strong>Tags:</strong> {{ trip()!.tags.join(', ') }}</p>
+        <div class="flex gap-2">
+          <span
+            class="px-3 py-1 bg-white/50 dark:bg-white/5 backdrop-blur-md border border-white/20 rounded-full text-xs font-semibold tracking-wide"
+          >
+            {{ trip()!.verticalType }}
+          </span>
         </div>
       </div>
 
-      <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
-        <h2 class="text-xl font-semibold mb-2 text-gray-900 dark:text-white" i18n>Description</h2>
-        <p class="text-gray-700 dark:text-gray-300">{{ trip()!.description }}</p>
+      <div class="space-y-6">
+        <div class="relative group h-112.5 overflow-hidden rounded-3xl shadow-2xl">
+          <img
+            [src]="trip()!.imageUrl"
+            [alt]="getAlt()"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div
+            class="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent"
+          ></div>
+          <div class="absolute bottom-0 left-0 p-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight drop-shadow-md">
+              {{ trip()!.title }}
+            </h1>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-6">
+            <div
+              class="p-8 bg-white/40 dark:bg-gray-900/40 backdrop-blur-xl border border-white/20 dark:border-gray-800/50 rounded-3xl shadow-sm"
+            >
+              <h2 class="text-xl font-bold mb-4 flex items-center gap-2" i18n>
+                <span class="w-1.5 h-6 bg-blue-500 rounded-full"></span>
+                About this trip
+              </h2>
+              <p class="text-gray-600 dark:text-gray-300 leading-relaxed text-lg italic">
+                {{ trip()!.description }}
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              @for (tag of trip()!.tags; track tag) {
+                <span
+                  class="px-4 py-1.5 bg-gray-200/50 dark:bg-gray-800/50 backdrop-blur-sm text-gray-700 dark:text-gray-300 rounded-lg text-sm font-medium border border-transparent hover:border-gray-300 dark:hover:border-gray-600 transition-all cursor-default"
+                >
+                  #{{ tag }}
+                </span>
+              }
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <div
+              class="p-6 bg-white/60 dark:bg-gray-900/60 backdrop-blur-2xl border border-white/40 dark:border-white/5 rounded-3xl shadow-xl space-y-6"
+            >
+              <div class="pb-6 border-b border-gray-200/50 dark:border-gray-700/50">
+                <p class="text-[10px] uppercase tracking-widest font-bold text-gray-400 mb-1" i18n>
+                  Investment
+                </p>
+                <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ trip()!.price }}</p>
+              </div>
+
+              <div class="space-y-4">
+                <div class="flex justify-between items-center">
+                  <span class="text-sm text-gray-500" i18n>Rating</span>
+                  <div class="text-right">
+                    <span class="font-bold">★ {{ trip()!.rating }}</span>
+                    <span class="block text-[10px] text-gray-400"
+                      >({{ trip()!.nrOfRatings }} reviews)</span
+                    >
+                  </div>
+                </div>
+
+                <div class="flex justify-between items-center">
+                  <span class="text-sm text-gray-500" i18n>Eco Footprint</span>
+                  <span
+                    class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-md text-xs font-bold"
+                  >
+                    {{ trip()!.co2 }} kg CO₂
+                  </span>
+                </div>
+
+                <div class="flex justify-between items-center">
+                  <span class="text-sm text-gray-500" i18n>Listed On</span>
+                  <span class="text-sm font-medium">{{ trip()!.creationDate | date }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  }
+    }
+  </div>
 </div>

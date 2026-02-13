@@ -62,4 +62,47 @@ describe('TripCardComponent', () => {
     card.click();
     expect(spy).toHaveBeenCalled();
   });
+
+  it('should calculate score for average tier', () => {
+    const lowTrip: Trip = { ...mockTrip, rating: 1.5, nrOfRatings: 5, co2: 100 };
+    fixture.componentRef.setInput('trip', lowTrip);
+    fixture.detectChanges();
+    expect(component.score()).toBeCloseTo(1.5 + 0.05 - 0.1, 2); // 1.45
+    expect(component.scoreTier()).toBe('average');
+  });
+
+  it('should calculate score for good tier', () => {
+    const medTrip: Trip = { ...mockTrip, rating: 3.0, nrOfRatings: 20, co2: 50 };
+    fixture.componentRef.setInput('trip', medTrip);
+    fixture.detectChanges();
+    expect(component.score()).toBeCloseTo(3.0 + 0.2 - 0.05, 2); // 3.15
+    expect(component.scoreTier()).toBe('good');
+  });
+
+  it('should calculate score for awesome tier', () => {
+    expect(component.score()).toBe(4.55); // As calculated
+    expect(component.scoreTier()).toBe('awesome');
+  });
+
+  it('should handle edge case with zero ratings', () => {
+    const edgeTrip: Trip = { ...mockTrip, nrOfRatings: 0 };
+    fixture.componentRef.setInput('trip', edgeTrip);
+    fixture.detectChanges();
+    expect(component.score()).toBe(4.5 - 0.05); // 4.45
+  });
+
+  it('should have correct alt text for image', () => {
+    const img = fixture.nativeElement.querySelector('img');
+    expect(img.getAttribute('alt')).toBe('Image of Test Trip');
+  });
+
+  it('should have correct aria label for card', () => {
+    const card = fixture.nativeElement.querySelector('div[role="button"]');
+    expect(card.getAttribute('aria-label')).toBe('View details for Test Trip');
+  });
+
+  it('should have correct aria label for score badge', () => {
+    const badge = fixture.nativeElement.querySelector('span[aria-label]');
+    expect(badge.getAttribute('aria-label')).toBe('Score: AWESOME');
+  });
 });

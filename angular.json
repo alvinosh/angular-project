@@ -3,11 +3,7 @@
   "version": 1,
   "cli": {
     "packageManager": "npm",
-    "schematicCollections": [
-      "@cypress/schematic",
-      "angular-eslint",
-      "@schematics/angular"
-    ]
+    "schematicCollections": ["@cypress/schematic", "angular-eslint", "@schematics/angular"]
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -42,12 +38,8 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.css"
-            ],
-            "polyfills": [
-              "@angular/localize/init"
-            ]
+            "styles": ["src/styles.css"],
+            "polyfills": ["@angular/localize/init"]
           },
           "configurations": {
             "production": {
@@ -77,14 +69,10 @@
               ]
             },
             "sq": {
-              "localize": [
-                "sq"
-              ]
+              "localize": ["sq"]
             },
             "it": {
-              "localize": [
-                "it"
-              ]
+              "localize": ["it"]
             }
           },
           "defaultConfiguration": "production"
@@ -113,10 +101,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         },
         "cypress-run": {
