@@ -181,10 +181,7 @@ describe('Trip App E2E Tests', () => {
       cy.get('[role="list"]', { timeout: 10000 }).should('be.visible');
 
       // Check trip cards have proper roles
-      cy.get('app-trip-card')
-        .first()
-        .find('[role="button"]')
-        .should('have.attr', 'tabindex', '0');
+      cy.get('app-trip-card').first().find('[role="button"]').should('have.attr', 'tabindex', '0');
 
       // Check images have alt text
       cy.get('app-trip-card img').first().should('have.attr', 'alt').and('not.be.empty');

@@ -35,7 +35,6 @@ describe('Header', () => {
     expect(component.ariaLabel).toBe('Switch to dark mode');
   });
 
-
   it('should call toggleDarkMode on button click', () => {
     fixture.detectChanges();
     const button = fixture.nativeElement.querySelector('button');
